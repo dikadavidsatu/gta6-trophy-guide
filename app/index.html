@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leonida Legend — GTA VI Trophy Guide &amp; Tracker</title>
+<meta name="description" content="Offline trophy tracker, platinum roadmap and per-trophy guide for all 55 official Grand Theft Auto VI PlayStation 5 trophies.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="hero-text">
+    <p class="kicker">Grand Theft Auto VI · PlayStation 5 · Offline guide</p>
+    <h1>Leonida Legend</h1>
+    <p class="tagline">Tracker, platinum roadmap and an honest guide to all <strong>55 official trophies</strong> —
+    1 platinum, 2 gold, 6 silver, 46 bronze, 28 of them hidden on PlayStation until earned.
+    Every name, description and grade below is the official list; every guide is written for this page and says what it is based on.</p>
+    <div class="hero-actions">
+      <button type="button" class="tab is-active" id="tab-tracker" data-view="tracker">Trophy tracker</button>
+      <button type="button" class="tab" id="tab-roadmap" data-view="roadmap">Roadmap &amp; missables</button>
+    </div>
+  </div>
+  <div class="hero-progress" aria-label="Overall progress">
+    <svg class="ring" viewBox="0 0 120 120" width="132" height="132" role="img" aria-label="Progress ring">
+      <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+      <circle class="ring-fg" id="ring-fg" cx="60" cy="60" r="52"></circle>
+      <text class="ring-num" id="ring-num" x="60" y="58" text-anchor="middle">0/55</text>
+      <text class="ring-pct" id="ring-pct" x="60" y="76" text-anchor="middle">0%</text>
+    </svg>
+    <ul class="grade-counts" id="grade-counts"></ul>
+  </div>
+</header>
+
+<main>
+  <section id="view-tracker" class="view">
+    <div class="controls" role="search">
+      <label class="ctl grow">Search
+        <input type="search" id="q" placeholder="Trophy name or description…" autocomplete="off">
+      </label>
+      <label class="ctl">Grade
+        <select id="f-grade">
+          <option value="">All grades</option>
+          <option value="platinum">Platinum</option>
+          <option value="gold">Gold</option>
+          <option value="silver">Silver</option>
+          <option value="bronze">Bronze</option>
+        </select>
+      </label>
+      <label class="ctl">Kind
+        <select id="f-kind">
+          <option value="">All kinds</option>
+          <option value="story">Story</option>
+          <option value="collectible">Collectible</option>
+          <option value="activity">Activity</option>
+          <option value="online">Online</option>
+          <option value="misc">Misc</option>
+        </select>
+      </label>
+      <label class="ctl">Status
+        <select id="f-status">
+          <option value="">Earned &amp; unearned</option>
+          <option value="earned">Earned only</option>
+          <option value="unearned">Unearned only</option>
+        </select>
+      </label>
+      <label class="ctl check"><input type="checkbox" id="f-missable"> Missables only</label>
+      <label class="ctl check"><input type="checkbox" id="opt-spoilers" checked> Hide spoilers</label>
+      <div class="ctl buttons">
+        <button type="button" id="btn-export">Export checklist</button>
+        <label class="file-btn">Import checklist<input type="file" id="file-import" accept="application/json,.json" hidden></label>
+        <button type="button" id="btn-reset">Reset</button>
+      </div>
+    </div>
+    <p class="result-line" id="result-line" aria-live="polite"></p>
+    <div class="grid" id="grid"></div>
+    <p class="empty" id="empty" hidden>No trophies match those filters. Loosen a filter or clear the search.</p>
+  </section>
+
+  <section id="view-roadmap" class="view" hidden>
+    <div class="road-cards">
+      <article class="road-card"><h3>Estimated time</h3><p class="big">80–120 hours</p>
+        <p>Estimate only. The 100% completion gold and the 250-stunt, money and collectible grinds set the pace; a story-only run is far shorter. Based on the official list's targets and the scale of past Rockstar completion lists — not on a finished playthrough.</p></article>
+      <article class="road-card"><h3>Difficulty</h3><p class="big">5 / 10</p>
+        <p>Estimate only. No difficulty-setting trophy appears in the official list. The friction is skill (all 42 Shooting Range golds), breadth (100% completion) and one inferred-missable cluster, not punishing combat.</p></article>
+      <article class="road-card"><h3>Missables</h3><p class="big">5 flagged</p>
+        <p>All five are <em>inferred</em> from the official descriptions' wording (choices, one-time scenes, a fail-first trophy). None is confirmed; the flags exist so you keep saves at the right moments. See the missables list below.</p></article>
+      <article class="road-card"><h3>Online required?</h3><p class="big">None stated</p>
+        <p>No official description requires online play. The two “with your partner” trophies name the story partner, not a second player, as far as the official text shows. The Kind filter still offers “online” so the list can be checked.</p></article>
+    </div>
+
+    <h2 class="section-title">Roadmap to the Platinum</h2>
+    <ol class="phases">
+      <li><h3>Phase 1 — Story first (Chapters 1–4 + finale)</h3>
+        <p>Play the campaign in order: the opening mission Gone Fishing, Chapters 1 to 4, the named missions (Breakfast Run, The Cartel Heist, Child's Play, Headliners, VCIA Takedown, Operation Savage Glory) and the final mission for the gold. Keep a manual save before the finale and before any decision the game presents as weighty — the five inferred missables all live in or near story moments. While at VCIA, watch for the unscheduled-departure moment. Bank: roughly 13 trophies, including 1 gold.</p></li>
+      <li><h3>Phase 2 — Strangers &amp; activities</h3>
+        <p>Finish the stranger strands (Andy, Kenton, Billy, Randy, Tyrone and the rest) to complete 8 strands for the Strangers &amp; Freaks silver. Sample every activity type once for Master of None, then work the skill and breadth lists: Shooting Range golds (42), Top Fun drone races (14 locations), 20 different race wins, Cal's fishing challenge, the arcade game and bowling. Bank: the strand bronzes, 2 silvers and a stack of activity bronzes.</p></li>
+      <li><h3>Phase 3 — Collectibles &amp; exploration</h3>
+        <p>Sweep Leonida region by region: 3 collectible card sets, WAiNK It at 100 locations, 18 meditation spots, 100 vehicles discovered, all 52 areas explored, and one illegal operation robbed per gang (9 gangs). Pair the sweeps so one trip serves several counters, and tick locations off as you go — the last few percent of any sweep is the slowest. Bank: 2 silvers and the exploration bronzes.</p></li>
+      <li><h3>Phase 4 — Cleanup &amp; the 100% grind</h3>
+        <p>Close the counters: 250 stunts, 50 challenges, 5 bank vaults, $250,000 of marked bills laundered, $100,000 spent in shops, all 8 garage properties bought and 10 vehicles registered in the Scooter Bros app, plus the one-off feats (Combat Focus five-in-one, the partner robberies, the stealth jewelry robbery). Finish with A Long Road — 100% completion — and the Platinum pops with it.</p></li>
+    </ol>
+
+    <h2 class="section-title" id="missables">Missables — flagged from the official wording</h2>
+    <p class="miss-intro">A flag means the official description's wording suggests a one-time moment, a branching choice or a fail-first condition. Each flag is an inference, labelled as such on the trophy itself; the safe countermeasure in every case is a manual save before story moments and first attempts. Names are shown in this section even when the spoiler setting is on — a warning you cannot read is no warning. Click a card to open its full guide.</p>
+    <div class="grid" id="miss-grid"></div>
+
+    <h2 class="section-title">Sources &amp; honesty</h2>
+    <p class="sources">Trophy names, descriptions and grades: the official PlayStation 5 list (55 trophies) as published by Exophase. Progress targets (for example 42 Shooting Range challenges, 18 meditation spots, 52 areas): PSNProfiles' listing of PSN's tracked counts. Guide text: written for this page from those descriptions. Where a guide goes beyond the description — series patterns from GTA V and Red Dead Redemption 2, likely unlock order, set-piece readings — it says “expectation” or “inferred” in the text. This game launched on 2026-11-19; no walkthrough claim here is presented as play-tested fact.</p>
+  </section>
+</main>
+
+<aside id="detail" class="detail" hidden role="dialog" aria-modal="false" aria-labelledby="d-name">
+  <button type="button" class="d-close" id="d-close" aria-label="Close trophy detail">×</button>
+  <div id="d-body"></div>
+</aside>
+<div id="scrim" class="scrim" hidden></div>
+
+<footer>
+  <p>Leonida Legend is a fan-made, open-source guide. It runs fully offline, stores your checklist only in this browser (localStorage), and makes no network requests. Progress can be exported and imported as a JSON file above.</p>
+</footer>
+
+<script src="data/trophies-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
