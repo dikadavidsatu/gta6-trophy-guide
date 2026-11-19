@@ -6,13 +6,13 @@
 
 **Leonida Legend** — an offline trophy tracker, platinum roadmap and guide for all **55 official Grand Theft Auto VI (PlayStation 5) trophies**: 1 platinum, 2 gold, 6 silver, 46 bronze, 28 hidden until earned.
 
-- **Tracker** — every official trophy with its exact name, description and grade. Click to mark earned; progress is saved in your browser (localStorage) with a progress ring and per-grade counts, and the checklist can be exported/imported as a JSON file.
+- **Tracker** — every official trophy with its exact name, description and grade. Click a card to mark it earned; progress persists in your browser (localStorage), with a progress ring, per-grade counts and an “up next” line that surfaces unearned missables first. The checklist exports and imports as a JSON file.
 - **Filters** — by grade, by kind (story / collectible / activity / online / misc), by earned status, by missables, plus text search. A **spoiler setting** hides unearned story trophies behind “Hidden trophy” until you earn them.
-- **Roadmap to the Platinum** — four phases (story → strangers & activities → collectibles & exploration → cleanup & the 100% grind) with estimated hours (80–120) and difficulty (5/10), both labelled as estimates.
+- **Roadmap to the Platinum** — four phases (story → strangers & activities → collectibles & exploration → cleanup & the 100% grind) with estimated hours (80–120) and difficulty (5/10), both labelled as estimates. Each trophy's guide panel also names the roadmap phase it belongs to.
 - **Missables, flagged honestly** — five trophies are flagged as *inferred* missables, reasoned from the official descriptions' wording (choices, one-time scenes, a fail-first condition) and labelled as inference everywhere they appear — never as confirmed fact.
-- **A guide for every trophy** — what to do, where and when it matters, and tips, in this guide's own words. Each panel cites its source: the official trophy description (Exophase) and PSN's tracked target where one exists (PSNProfiles). Anything drawn from GTA V / RDR2 trophy design is labelled an *expectation*, not a fact — the game launched 2026-11-19 and no claim here pretends to be play-tested.
+- **A guide for every trophy** — what to do, where and when it matters, and a tip, in this guide's own words. Each panel cites its sources: the official trophy description (Exophase) and PSN's tracked target where one exists (PSNProfiles). Anything drawn from GTA V / RDR2 trophy design is labelled an *expectation*, not a fact — the game launched 2026-11-19 and no claim here pretends to be play-tested.
 
-The app is plain static files with zero dependencies and zero network requests: it works from `file://` or any static host.
+The app is plain static files with zero dependencies and zero network requests: it works from `file://` or any static host, and shows no Rockstar logo or official artwork.
 
 ## Run it
 

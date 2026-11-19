@@ -1,6 +1,6 @@
 // Minimal local server for previewing app/ during development.
 //   node serve.ts [--port 8123]   →   http://localhost:8123
-// Standard library only; refuses paths outside app/.
+// Standard library only; refuses any path outside app/.
 import { createServer } from 'node:http';
 import { readFileSync, statSync } from 'node:fs';
 import { extname, join, normalize, resolve, sep } from 'node:path';

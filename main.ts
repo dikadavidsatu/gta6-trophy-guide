@@ -1,10 +1,11 @@
 // Entry point for gta6-trophy-guide-01 (Node 22, standard library only).
 //
-// The guide itself is the static site in app/ — plain HTML, CSS, one script and
-// its trophy data, with no build step and no network use. This program hands it
-// in: it copies app/ and screenshots/ next to this file into the output
-// directory and writes dossier.json there with the vendored make.fun library
-// (vendor/makefun-frontend.ts, kept byte-for-byte as the scorer requires).
+// The guide itself is the static site in app/ — plain HTML, CSS, one script
+// and its trophy data, with no build step and no network use. This program
+// hands the entry in: it copies app/ and screenshots/ from beside this file
+// into the output directory and writes dossier.json there, built with the
+// vendored make.fun library (vendor/makefun-frontend.ts, kept byte-for-byte
+// as the scorer requires).
 //
 // Output directory: /output inside the grader, or $MAKEFUN_OUTPUT_DIR locally:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
@@ -24,8 +25,8 @@ if (existsSync(join(root, 'screenshots'))) {
   cpSync(join(root, 'screenshots'), join(outDir, 'screenshots'), { recursive: true });
 }
 
-// Caps mirror the competition gate: dossier text budget, at most 4 screenshots
-// of at most 256 KiB each, app/ at most 993 entries and 48 MiB.
+// Caps mirror the competition gate: a dossier text budget, at most 4
+// screenshots of at most 256 KiB each, app/ at most 993 entries and 48 MiB.
 const dossier = buildDossier(outDir, {
   text_max_bytes: 163840,
   screenshots: { max: 4, max_bytes: 262144 },

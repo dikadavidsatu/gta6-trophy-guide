@@ -1,8 +1,9 @@
-/* Leonida Legend — dark Vice-City-neon theme. No external fonts or assets. */
+/* Leonida Legend — dark neon theme in the spirit of Vice City nights.
+   System font stacks only: no webfonts, no images, no external assets. */
 :root{
-  --bg:#0b0714; --bg2:#150a24; --panel:#1b1030; --panel2:#241540;
-  --ink:#f4eefc; --muted:#b9a8d9; --line:#3a2560;
-  --pink:#ff4fa3; --cyan:#25e6e0; --gold:#ffd34d; --silver:#cfd8e6; --bronze:#e09a5f; --plat:#a8f0ff;
+  --bg:#0b0714; --bg2:#160a26; --panel:#1b1030; --panel2:#251642;
+  --ink:#f5effd; --muted:#baa9da; --line:#3b2663;
+  --pink:#ff4fa3; --cyan:#25e6e0; --gold:#ffd34d; --silver:#cfd8e6; --bronze:#e09a5f; --plat:#a9f1ff;
   --danger:#ff5d5d; --ok:#5df0a0;
 }
 *{box-sizing:border-box}
@@ -18,16 +19,15 @@ button,select,input{font:inherit;color:inherit}
   max-width:1180px;margin:0 auto;padding:2rem 1.25rem 1rem}
 .kicker{letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-size:.78rem;margin:0 0 .4rem}
 .hero h1{font-size:3rem;margin:0;background:linear-gradient(92deg,var(--pink),#ff9a5c 55%,var(--gold));
-  -webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
+  -webkit-background-clip:text;background-clip:text;color:transparent}
 .tagline{max-width:56ch;color:var(--muted);margin:.6rem 0 1rem}
-.hero-actions{display:flex;gap:.5rem}
+.hero-actions{display:flex;gap:.5rem;flex-wrap:wrap}
 .tab{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:.5rem 1.1rem;cursor:pointer}
 .tab.is-active{background:linear-gradient(92deg,#7b1e5e,#3d1a78);border-color:var(--pink);color:#fff}
 .hero-progress{display:flex;align-items:center;gap:1rem;background:var(--panel);border:1px solid var(--line);
   border-radius:16px;padding:.8rem 1.1rem}
-.ring{transform:rotate(0deg)}
 .ring-bg{fill:none;stroke:#2c1a4d;stroke-width:10}
-.ring-fg{fill:none;stroke:url(#none);stroke:var(--pink);stroke-width:10;stroke-linecap:round;
+.ring-fg{fill:none;stroke:var(--pink);stroke-width:10;stroke-linecap:round;
   stroke-dasharray:326.7;stroke-dashoffset:326.7;transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset .4s}
 .ring-num{fill:var(--ink);font-size:1.05rem;font-weight:700}
 .ring-pct{fill:var(--muted);font-size:.8rem}
@@ -40,7 +40,7 @@ button,select,input{font:inherit;color:inherit}
 main{max-width:1180px;margin:0 auto;padding:0 1.25rem 2rem}
 .section-title{margin:2rem 0 .6rem;color:var(--gold)}
 
-/* controls */
+/* tracker controls */
 .controls{display:flex;flex-wrap:wrap;gap:.7rem;align-items:end;background:var(--panel);
   border:1px solid var(--line);border-radius:14px;padding:.8rem 1rem;margin-top:.6rem}
 .ctl{display:flex;flex-direction:column;gap:.3rem;font-size:.82rem;color:var(--muted)}
@@ -51,7 +51,9 @@ main{max-width:1180px;margin:0 auto;padding:0 1.25rem 2rem}
 .ctl.buttons button,.file-btn{background:var(--panel2);border:1px solid var(--line);border-radius:8px;
   padding:.48rem .8rem;cursor:pointer;color:var(--ink);font-size:.9rem}
 .ctl.buttons button:hover,.file-btn:hover{border-color:var(--cyan)}
-.result-line{color:var(--muted);font-size:.9rem;margin:.8rem 0 .4rem}
+.result-line{color:var(--muted);font-size:.9rem;margin:.8rem 0 .2rem}
+.next-line{color:var(--cyan);font-size:.9rem;margin:.1rem 0 .5rem;min-height:1.2em}
+.empty{color:var(--muted)}
 
 /* trophy cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:.8rem}
@@ -75,7 +77,6 @@ main{max-width:1180px;margin:0 auto;padding:0 1.25rem 2rem}
 .card.earned .mark{border-color:var(--ok);color:var(--ok)}
 .spoilered{filter:blur(5px);user-select:none}
 .hidden-name{color:var(--muted);font-style:italic}
-.empty{color:var(--muted)}
 
 /* roadmap */
 .road-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.8rem;margin-top:1rem}
@@ -99,6 +100,7 @@ main{max-width:1180px;margin:0 auto;padding:0 1.25rem 2rem}
 .detail h4{margin:1.1rem 0 .3rem;color:var(--cyan);font-size:.82rem;letter-spacing:.1em;text-transform:uppercase}
 .detail p{color:var(--muted)}
 .detail p strong{color:var(--ink)}
+.detail .phase{color:var(--gold);font-size:.9rem}
 .warn{border:1px solid var(--danger);background:#3d0f1e;border-radius:10px;padding:.6rem .9rem;color:#ffd7d7}
 .detail .mark{width:100%;padding:.6rem;background:linear-gradient(92deg,#7b1e5e,#3d1a78);border:1px solid var(--pink);
   border-radius:10px;cursor:pointer;color:#fff;font-weight:600}

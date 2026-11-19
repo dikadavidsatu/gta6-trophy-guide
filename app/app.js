@@ -1,12 +1,21 @@
-/* Leonida Legend — tracker logic. Plain script, no modules, no network:
-   trophy data arrives via data/trophies-data.js (window.__TROPHY_DATA__),
-   the same content as data/trophies.json, so the page also works from file://. */
+/* Leonida Legend — tracker logic. One plain script, no modules, no network.
+   Trophy data arrives via data/trophies-data.js (window.__TROPHY_DATA__), the
+   same content as data/trophies.json, so the page also works from file://. */
 (function () {
   'use strict';
   var DATA = window.__TROPHY_DATA__;
   var TROPHIES = DATA.trophies;
   var KEY = 'leonida-legend-v1';
   var GRADES = ['platinum', 'gold', 'silver', 'bronze'];
+  /* Which roadmap phase a trophy mainly belongs to, by kind — shown in the
+     detail panel so a reader always knows where a trophy sits in the plan. */
+  var PHASE = {
+    story: 'Roadmap phase 1 — story first',
+    activity: 'Roadmap phase 2 — strangers & activities (counters finish in phase 4)',
+    collectible: 'Roadmap phase 3 — collectibles & exploration',
+    misc: 'Roadmap phase 4 — cleanup & the 100% grind (or a story moment — see the guide)',
+    online: 'No online trophy is stated in the official list'
+  };
   var params = new URLSearchParams(location.search);
 
   var state = load();
@@ -21,7 +30,7 @@
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* in-memory only */ }
   }
 
-  /* Demo seeding for screenshots / sharing a lived-in link: ?demo=1, ?earned=2,3,8 */
+  /* Demo seeding for screenshots and shareable lived-in links: ?demo=1, ?earned=2,3,8 */
   if (params.has('demo')) {
     state.earned = [2, 3, 4, 5, 8, 10, 16, 19, 20, 21, 25, 36, 51];
     save();
@@ -80,17 +89,26 @@
   }
 
   function render() {
-    /* progress */
+    /* progress ring + per-grade counts */
     var total = TROPHIES.length, n = state.earned.length;
     $('ring-num').textContent = n + '/' + total;
-    var pct = Math.round((n / total) * 100);
-    $('ring-pct').textContent = pct + '%';
+    $('ring-pct').textContent = Math.round((n / total) * 100) + '%';
     $('ring-fg').style.strokeDashoffset = String(326.7 * (1 - n / total));
     $('grade-counts').innerHTML = GRADES.map(function (g) {
       var all = TROPHIES.filter(function (t) { return t.grade === g; }).length;
       var got = TROPHIES.filter(function (t) { return t.grade === g && isEarned(t); }).length;
       return '<li><span><span class="dot ' + g + '"></span>' + g + '</span><strong>' + got + ' / ' + all + '</strong></li>';
     }).join('');
+
+    /* "up next" line: unearned inferred missables first (they are the ones a
+       player can lose), then the remaining count. */
+    var openMiss = TROPHIES.filter(function (t) { return t.missable && !isEarned(t); }).length;
+    var left = total - n;
+    $('next-line').textContent = left === 0
+      ? 'All 55 trophies earned — Leonida Legend status. 🏆'
+      : (openMiss > 0
+          ? 'Up next: ' + left + ' trophies to go, including ' + openMiss + ' unearned inferred missable' + (openMiss === 1 ? '' : 's') + ' — keep a manual save before story moments.'
+          : 'Up next: ' + left + ' trophies to go, and every inferred missable is already banked.');
 
     /* tracker grid */
     var f = currentFilter();
@@ -108,7 +126,7 @@
     $('empty').hidden = shown.length > 0;
     $('result-line').textContent = 'Showing ' + shown.length + ' of ' + total + ' trophies · ' + n + ' earned · progress saves automatically in this browser.';
 
-    /* missables grid (roadmap view) */
+    /* missables grid (roadmap view): names always revealed here, on purpose */
     missGrid.innerHTML = '';
     TROPHIES.filter(function (t) { return t.missable; }).forEach(function (t) { missGrid.appendChild(card(t, true, true)); });
   }
@@ -123,12 +141,13 @@
     var h = '<div class="meta" style="display:flex;gap:.35rem;flex-wrap:wrap">' + badges(t) + '</div>';
     h += '<h2 id="d-name">' + (hid ? 'Hidden trophy' : t.name) + '</h2>';
     h += '<p class="official">“' + (hid ? 'Description hidden by the spoiler setting until earned.' : t.description) + '”</p>';
+    h += '<p class="phase">' + (PHASE[t.kind] || '') + '</p>';
     if (t.target) h += '<p><strong>PSN target:</strong> ' + t.target.toLocaleString('en-US') + ' ' + (t.targetLabel || '') + '.</p>';
-    if (t.missable) h += '<p class="warn"><strong>⚠ Missable — flagged (inferred).</strong> This flag is reasoned from the official description’s wording (a choice, a one-time scene or a fail-first condition), not from a confirmed report. Keep a manual save before the relevant story moment or first attempt.</p>';
+    if (t.missable) h += '<p class="warn"><strong>⚠ Missable — flagged (inferred).</strong> The flag is reasoned from the official description’s wording — a choice, a one-time scene or a fail-first condition — not from a confirmed report. Keep a manual save before the relevant story moment or first attempt.</p>';
     h += '<h4>Guide — what to do, where &amp; when</h4><p>' + t.guide + '</p>';
     h += '<h4>Tips</h4><p>' + t.tips + '</p>';
     h += '<button type="button" class="mark" id="d-toggle">' + (isEarned(t) ? '✓ Earned — click to undo' : 'Mark this trophy earned') + '</button>';
-    h += '<p class="src"><strong>Sources:</strong> ' + t.source + ' Full source list and the honesty note are on the Roadmap &amp; missables view.</p>';
+    h += '<p class="src"><strong>Sources:</strong> ' + t.source + ' The full source list and honesty note are on the Roadmap &amp; missables view.</p>';
     $('d-body').innerHTML = h;
     $('detail').hidden = false;
     $('scrim').hidden = false;
