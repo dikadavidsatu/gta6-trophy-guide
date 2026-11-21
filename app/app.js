@@ -1,6 +1,9 @@
 /* Leonida Legend — tracker logic. One plain script, no modules, no network.
    Trophy data arrives via data/trophies-data.js (window.__TROPHY_DATA__), the
-   same content as data/trophies.json, so the page also works from file://. */
+   same content as data/trophies.json, so the page also works from file://.
+   Every trophy carries a three-step guide: how to trigger it, where and when
+   it happens, and what to watch out for. The search box matches guide text
+   too, so typing "showroom" or "launder" finds the trophy whose hints say so. */
 (function () {
   'use strict';
   var DATA = window.__TROPHY_DATA__;
@@ -16,6 +19,9 @@
     misc: 'Roadmap phase 4 — cleanup & the 100% grind (or a story moment — see the guide)',
     online: 'No online trophy is stated in the official list'
   };
+  /* Labels for the three guide steps, in order: what to do, where and when,
+     what to watch out for. */
+  var GUIDE_LABELS = ['How to trigger it', 'Where & when', 'Watch out for'];
   var params = new URLSearchParams(location.search);
 
   var state = load();
@@ -46,6 +52,23 @@
   function isEarned(t) { return state.earned.indexOf(t.id) !== -1; }
   function spoilerHides(t) { return state.spoilers && t.hidden && !isEarned(t); }
 
+  /* The guide is a three-string array [how, where/when, watch-out]. Older
+     exports of the data used one long string; accept that shape too so a
+     stale copy of the data file still renders instead of breaking the page. */
+  function guideSteps(t) {
+    if (Array.isArray(t.guide)) return t.guide;
+    if (typeof t.guide === 'string' && t.guide) return [t.guide];
+    return [];
+  }
+  function guideText(t) { return guideSteps(t).join(' '); }
+
+  /* Escape text before it is interpolated into innerHTML. The data is ours,
+     but a checklist import must never be able to inject markup this way. */
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
   function badges(t) {
     var h = '<span class="badge g-' + t.grade + '">' + t.grade + '</span>' +
       '<span class="badge">' + t.kind + '</span>';
@@ -63,9 +86,15 @@
     el.setAttribute('role', 'button');
     el.setAttribute('aria-label', 'Open guide for ' + t.name);
     var hid = forceReveal ? false : spoilerHides(t);
-    var name = hid ? '<span class="hidden-name">Hidden trophy</span>' : t.name;
-    var desc = hid ? '<span class="spoilered">This story trophy stays hidden until you earn it. Turn off “Hide spoilers” to reveal it.</span>' : t.description;
-    el.innerHTML = '<h3>' + name + '</h3><p>' + desc + '</p><div class="meta">' + badges(t) + '</div>' +
+    var name = hid ? '<span class="hidden-name">Hidden trophy</span>' : esc(t.name);
+    var desc = hid ? '<span class="spoilered">This story trophy stays hidden until you earn it. Turn off “Hide spoilers” to reveal it.</span>' : esc(t.description);
+    /* First guide step as a preview line, so the grid already answers "how
+       do I start this one?" without opening the detail panel. Hidden cards
+       keep the preview back with the rest of the spoiler. */
+    var steps = guideSteps(t);
+    var preview = (!hid && steps.length > 0)
+      ? '<p class="first-step"><strong>First step:</strong> ' + esc(steps[0]) + '</p>' : '';
+    el.innerHTML = '<h3>' + name + '</h3><p>' + desc + '</p>' + preview + '<div class="meta">' + badges(t) + '</div>' +
       (hideMark ? '' : '<button type="button" class="mark">' + (isEarned(t) ? '✓ Earned — undo' : 'Mark earned') + '</button>');
     el.addEventListener('click', function () { openDetail(t.id); });
     el.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); openDetail(t.id); } });
@@ -121,7 +150,10 @@
           ? 'Up next: ' + left + ' trophies to go, including ' + openMiss + ' unearned inferred missable' + (openMiss === 1 ? '' : 's') + ' — keep a manual save before story moments.'
           : 'Up next: ' + left + ' trophies to go, and every inferred missable is already banked.');
 
-    /* tracker grid */
+    /* tracker grid: the search query matches the name, the official
+       description, the kind — and all three guide steps, so a player can
+       search for what they remember doing ("showroom", "launder", "bowling")
+       instead of the trophy's exact name. */
     var f = currentFilter();
     var shown = TROPHIES.filter(function (t) {
       if (f.grade && t.grade !== f.grade) return false;
@@ -129,7 +161,7 @@
       if (f.status === 'earned' && !isEarned(t)) return false;
       if (f.status === 'unearned' && isEarned(t)) return false;
       if (f.miss && !t.missable) return false;
-      if (f.q && (t.name + ' ' + t.description + ' ' + t.kind).toLowerCase().indexOf(f.q) === -1) return false;
+      if (f.q && (t.name + ' ' + t.description + ' ' + t.kind + ' ' + guideText(t)).toLowerCase().indexOf(f.q) === -1) return false;
       return true;
     });
     grid.innerHTML = '';
@@ -144,21 +176,36 @@
 
   /* detail panel */
   var current = null;
+  function guideHtml(t) {
+    var steps = guideSteps(t);
+    if (steps.length === 0) return '<p>No guide steps for this trophy yet.</p>';
+    /* A numbered list, one labelled step per line: how to trigger it, where
+       and when it happens, what to watch out for. Spoiler-hidden trophies
+       show the same steps — the steps are written spoiler-light on purpose —
+       but only once the trophy's name and description are visible, so the
+       panel never leaks a hidden trophy's identity while it is still hidden. */
+    var items = steps.map(function (s, i) {
+      var label = GUIDE_LABELS[i] || ('Step ' + (i + 1));
+      return '<li><strong>' + label + ':</strong> ' + esc(s) + '</li>';
+    }).join('');
+    return '<ol class="guide-list">' + items + '</ol>';
+  }
   function openDetail(id) {
     var t = TROPHIES.filter(function (x) { return x.id === id; })[0];
     if (!t) return;
     current = t;
     var hid = spoilerHides(t);
     var h = '<div class="meta" style="display:flex;gap:.35rem;flex-wrap:wrap">' + badges(t) + '</div>';
-    h += '<h2 id="d-name">' + (hid ? 'Hidden trophy' : t.name) + '</h2>';
-    h += '<p class="official">“' + (hid ? 'Description hidden by the spoiler setting until earned.' : t.description) + '”</p>';
+    h += '<h2 id="d-name">' + (hid ? 'Hidden trophy' : esc(t.name)) + '</h2>';
+    h += '<p class="official">“' + (hid ? 'Description hidden by the spoiler setting until earned.' : esc(t.description)) + '”</p>';
     h += '<p class="phase">' + (PHASE[t.kind] || '') + '</p>';
-    if (t.target) h += '<p><strong>PSN target:</strong> ' + t.target.toLocaleString('en-US') + ' ' + (t.targetLabel || '') + '.</p>';
+    if (t.target) h += '<p><strong>PSN target:</strong> ' + t.target.toLocaleString('en-US') + ' ' + esc(t.targetLabel || '') + '.</p>';
     if (t.missable) h += '<p class="warn"><strong>⚠ Missable — flagged (inferred).</strong> The flag is reasoned from the official description’s wording — a choice, a one-time scene or a fail-first condition — not from a confirmed report. Keep a manual save before the relevant story moment or first attempt.</p>';
-    h += '<h4>Guide — what to do, where &amp; when</h4><p>' + t.guide + '</p>';
-    h += '<h4>Tips</h4><p>' + t.tips + '</p>';
+    h += '<h4>How to get it — three steps</h4>';
+    h += hid ? '<p class="spoiler-note">The guide steps stay hidden with this trophy until you earn it or turn off “Hide spoilers”.</p>' : guideHtml(t);
+    h += '<h4>Tips</h4><p>' + esc(t.tips) + '</p>';
     h += '<button type="button" class="mark" id="d-toggle">' + (isEarned(t) ? '✓ Earned — click to undo' : 'Mark this trophy earned') + '</button>';
-    h += '<p class="src"><strong>Sources:</strong> ' + t.source + ' The full source list and honesty note are on the Roadmap &amp; missables view.</p>';
+    h += '<p class="src"><strong>Sources:</strong> ' + esc(t.source) + ' The full source list and honesty note are on the Roadmap &amp; missables view.</p>';
     $('d-body').innerHTML = h;
     $('detail').hidden = false;
     $('scrim').hidden = false;

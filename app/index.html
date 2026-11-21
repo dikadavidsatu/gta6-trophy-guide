@@ -14,6 +14,8 @@
     <h1>Leonida Legend</h1>
     <p class="tagline">A tracker, a platinum roadmap and an honest guide to all <strong>55 official trophies</strong> —
     1 platinum, 2 gold, 6 silver, 46 bronze, 28 of them hidden on PlayStation until earned.
+    Every trophy carries a three-step how-to — how to trigger it, where and when it happens, what to watch out for —
+    and the search box finds trophies by those hints as well as by name.
     Names, descriptions and grades below are the official list, word for word; every guide is written for this page and says what it rests on.</p>
     <div class="hero-actions" role="group" aria-label="Choose a view">
       <button type="button" class="tab is-active" id="tab-tracker" data-view="tracker" aria-label="Show the trophy tracker">Trophy tracker</button>
@@ -35,7 +37,7 @@
   <section id="view-tracker" class="view" aria-label="Trophy tracker">
     <div class="controls" role="search" aria-label="Trophy filters">
       <label class="ctl grow">Search
-        <input type="search" id="q" placeholder="Trophy name or description…" autocomplete="off" aria-label="Search trophies by name or description">
+        <input type="search" id="q" placeholder="Name, description or guide hint — try “showroom”, “launder”, “bowling”…" autocomplete="off" aria-label="Search trophies by name, description or guide hints">
       </label>
       <label class="ctl">Grade
         <select id="f-grade" aria-label="Filter by trophy grade">
@@ -71,6 +73,7 @@
         <button type="button" id="btn-reset">Reset</button>
       </div>
     </div>
+    <p class="search-hint" id="search-hint">Search looks inside every trophy's three guide steps too — type what you remember doing, not just the trophy's name. Each card shows its first guide step; click a card for all three.</p>
     <div class="progress-wrap">
       <div class="progress-bar" id="progress-bar" role="progressbar" aria-label="Trophy completion percentage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div>
       <p class="progress-label" id="progress-label" aria-live="polite">0% complete — 0 of 55 trophies earned</p>
@@ -108,6 +111,9 @@
     <h2 class="section-title" id="missables">Missables — flagged from the official wording</h2>
     <p class="miss-intro">A flag means the official description's wording suggests a one-time moment, a branching choice or a fail-first condition. Every flag is an inference and is labelled as one on the trophy itself; the safe countermeasure in each case is a manual save before story moments and first attempts. Names are shown in this section even when the spoiler setting is on — a warning you cannot read is no warning at all. Click a card to open its full guide.</p>
     <div class="grid" id="miss-grid"></div>
+
+    <h2 class="section-title">How the three-step guides work</h2>
+    <p class="sources">Every trophy's detail panel now lists three steps in the same order: <strong>How to trigger it</strong> — the action the trophy asks for; <strong>Where &amp; when</strong> — the place, moment or story window it belongs to; <strong>Watch out for</strong> — the mistake, trap or missable condition that costs a retry. Hidden story trophies keep their steps spoiler-light, and the steps stay hidden with the trophy until you earn it or turn spoilers off. The search box matches all three steps, so you can find a trophy from a word in its hints.</p>
 
     <h2 class="section-title">Sources &amp; honesty</h2>
     <p class="sources">Trophy names, descriptions and grades: the official PlayStation 5 list of 55 trophies, as published by Exophase. Progress targets (for example 42 Shooting Range challenges, 18 meditation spots, 52 areas of Leonida): PSNProfiles' listing of the counts PSN itself tracks. Guide text: written for this page from those descriptions. Where a guide goes beyond the description — series patterns from GTA V and Red Dead Redemption 2, likely unlock order, readings of set pieces — the text says “expectation” or “inferred”. Grand Theft Auto VI launched on 2026-11-19; no walkthrough claim on this page is presented as play-tested fact.</p>

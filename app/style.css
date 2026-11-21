@@ -47,10 +47,16 @@ main{max-width:1180px;margin:0 auto;padding:0 1.25rem 2rem}
 .ctl.grow{flex:1 1 200px}
 .ctl.check{flex-direction:row;align-items:center;gap:.45rem;padding-bottom:.5rem;color:var(--ink);cursor:pointer}
 .ctl input[type="search"],.ctl select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:.48rem .6rem;color:var(--ink)}
+/* The search box is the guide's front door: it matches names, descriptions
+   and all three guide steps, so it gets the strongest focus ring on the page. */
+.ctl input[type="search"]:focus{border-color:var(--cyan);outline:2px solid var(--cyan);outline-offset:1px}
+.ctl input[type="search"]::placeholder{color:#7d6aa8}
 .ctl.buttons{flex-direction:row;gap:.45rem;margin-left:auto}
 .ctl.buttons button,.file-btn{background:var(--panel2);border:1px solid var(--line);border-radius:8px;
   padding:.48rem .8rem;cursor:pointer;color:var(--ink);font-size:.9rem}
 .ctl.buttons button:hover,.file-btn:hover{border-color:var(--cyan)}
+.search-hint{color:var(--muted);font-size:.88rem;margin:.6rem 0 0;max-width:75ch}
+.search-hint::before{content:"Search tip: ";color:var(--cyan);font-weight:600}
 .result-line{color:var(--muted);font-size:.9rem;margin:.8rem 0 .2rem}
 .next-line{color:var(--cyan);font-size:.9rem;margin:.1rem 0 .5rem;min-height:1.2em}
 .empty{color:var(--muted)}
@@ -86,6 +92,12 @@ main{max-width:1180px;margin:0 auto;padding:0 1.25rem 2rem}
 .card.earned .mark{border-color:var(--ok);color:var(--ok)}
 .spoilered{filter:blur(5px);user-select:none}
 .hidden-name{color:var(--muted);font-style:italic}
+/* First guide step shown on the card itself, so the grid answers "how do I
+   start this one?" at a glance. The step's label stays cyan; the step text
+   stays the card's muted tone so it reads as a hint, not a headline. */
+.card .first-step{margin-top:.45rem;padding:.45rem .6rem;border-left:3px solid var(--cyan);
+  background:var(--bg2);border-radius:0 8px 8px 0;font-size:.85rem}
+.card .first-step strong{color:var(--cyan)}
 
 /* roadmap */
 .road-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.8rem;margin-top:1rem}
@@ -97,7 +109,9 @@ main{max-width:1180px;margin:0 auto;padding:0 1.25rem 2rem}
 .phases li{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1rem 1.2rem}
 .phases h3{margin:.1rem 0 .4rem;color:var(--pink)}
 .phases p{color:var(--muted);margin:0}
+.phases p strong{color:var(--ink)}
 .miss-intro,.sources{color:var(--muted);max-width:75ch}
+.sources strong{color:var(--ink)}
 
 /* detail panel */
 .scrim{position:fixed;inset:0;background:rgba(5,2,12,.6)}
@@ -114,5 +128,16 @@ main{max-width:1180px;margin:0 auto;padding:0 1.25rem 2rem}
 .detail .mark{width:100%;padding:.6rem;background:linear-gradient(92deg,#7b1e5e,#3d1a78);border:1px solid var(--pink);
   border-radius:10px;cursor:pointer;color:#fff;font-weight:600}
 .src{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding-top:.6rem}
+.spoiler-note{font-style:italic}
+/* The three-step guide list in the detail panel: numbered steps on the
+   panel background, each step's label in cyan so the eye can scan the
+   three questions — how, where & when, watch out — before reading. */
+.guide-list{list-style:none;counter-reset:step;margin:.4rem 0 0;padding:0;display:grid;gap:.55rem}
+.guide-list li{counter-increment:step;background:var(--panel);border:1px solid var(--line);
+  border-radius:10px;padding:.6rem .8rem .6rem 2.9rem;position:relative;color:var(--muted);font-size:.93rem}
+.guide-list li::before{content:counter(step);position:absolute;left:.7rem;top:.55rem;width:1.5rem;height:1.5rem;
+  border-radius:50%;background:linear-gradient(135deg,#7b1e5e,#3d1a78);border:1px solid var(--pink);
+  color:#fff;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center}
+.guide-list li strong{color:var(--cyan)}
 footer{max-width:1180px;margin:0 auto;padding:0 1.25rem 2.5rem;color:var(--muted);font-size:.88rem}
 @media (max-width:640px){.hero h1{font-size:2.2rem}.hero-progress{width:100%}}
