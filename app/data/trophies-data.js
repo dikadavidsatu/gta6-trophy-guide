@@ -1,5 +1,6 @@
-// Generated from data/trophies.json (identical content) so the tracker also works from file://,
-// where fetch() of a local JSON file is blocked. Do not edit by hand.
+// Hand-maintained mirror of data/trophies.json (identical content), kept in
+// step by hand so the tracker also works from file://, where fetch() of a
+// local JSON file is blocked. Edit both files together.
 window.__TROPHY_DATA__ = {
  "game": "Grand Theft Auto VI",
  "platform": "PlayStation 5",

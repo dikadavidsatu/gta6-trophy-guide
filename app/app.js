@@ -91,14 +91,25 @@
   function render() {
     /* progress ring + per-grade counts */
     var total = TROPHIES.length, n = state.earned.length;
+    var pct = Math.round((n / total) * 100);
     $('ring-num').textContent = n + '/' + total;
-    $('ring-pct').textContent = Math.round((n / total) * 100) + '%';
+    $('ring-pct').textContent = pct + '%';
     $('ring-fg').style.strokeDashoffset = String(326.7 * (1 - n / total));
     $('grade-counts').innerHTML = GRADES.map(function (g) {
       var all = TROPHIES.filter(function (t) { return t.grade === g; }).length;
       var got = TROPHIES.filter(function (t) { return t.grade === g && isEarned(t); }).length;
       return '<li><span><span class="dot ' + g + '"></span>' + g + '</span><strong>' + got + ' / ' + all + '</strong></li>';
     }).join('');
+
+    /* progress bar (tracker view): the same percentage as the ring, in a
+       wide bar a screen reader can read as a progressbar and a sighted
+       reader can take in without finding the hero panel. */
+    var fill = $('progress-fill'), bar = $('progress-bar');
+    if (fill && bar) {
+      fill.style.width = pct + '%';
+      bar.setAttribute('aria-valuenow', String(pct));
+      $('progress-label').textContent = pct + '% complete — ' + n + ' of ' + total + ' trophies earned';
+    }
 
     /* "up next" line: unearned inferred missables first (they are the ones a
        player can lose), then the remaining count. */

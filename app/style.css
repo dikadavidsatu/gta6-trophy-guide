@@ -55,11 +55,20 @@ main{max-width:1180px;margin:0 auto;padding:0 1.25rem 2rem}
 .next-line{color:var(--cyan);font-size:.9rem;margin:.1rem 0 .5rem;min-height:1.2em}
 .empty{color:var(--muted)}
 
+/* progress bar (tracker view): mirrors the hero ring's percentage in a wide,
+   labelled bar so completion is readable without scanning the hero panel. */
+.progress-wrap{margin:.9rem 0 .1rem}
+.progress-bar{height:.65rem;background:#2c1a4d;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(92deg,var(--pink),#ff9a5c 60%,var(--gold));
+  border-radius:999px;transition:width .4s ease}
+.progress-label{color:var(--muted);font-size:.88rem;margin:.35rem 0 0}
+
 /* trophy cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:.8rem}
 .card{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--bronze);
-  border-radius:12px;padding:.8rem .9rem;cursor:pointer;text-align:left;width:100%}
-.card:hover{border-color:var(--pink)}
+  border-radius:12px;padding:.8rem .9rem;cursor:pointer;text-align:left;width:100%;
+  transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
+.card:hover{border-color:var(--pink);transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.35)}
 .card.grade-platinum{border-left-color:var(--plat)} .card.grade-gold{border-left-color:var(--gold)}
 .card.grade-silver{border-left-color:var(--silver)} .card.grade-bronze{border-left-color:var(--bronze)}
 .card.earned{background:linear-gradient(180deg,#1e2b1a,var(--panel));border-color:#3f6b3a}
